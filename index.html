@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Wellness Hub - Your Complete Health Companion</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #06b6d4;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --dark-color: #1f2937;
+            --light-color: #f8fafc;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark-color) !important;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.1"><polygon points="0,0 1000,100 1000,0"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-button {
+            background: var(--gradient-secondary);
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            color: white;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: none;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .fitness-icon { background: var(--gradient-primary); }
+        .diet-icon { background: var(--gradient-success); }
+        .mental-icon { background: var(--gradient-secondary); }
+        .sleep-icon { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+
+        /* Dashboard Styles */
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 1.5rem;
+            border: none;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        /* Form Styles */
+        .form-control {
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1.5rem;
+        }
+
+        /* Chatbot Styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chatbot-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(79, 70, 229, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(79, 70, 229, 0.6);
+        }
+
+        .chatbot-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: none;
+            flex-direction: column;
+        }
+
+        .chatbot-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 20px 20px 0 0;
+            font-weight: 600;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .chatbot-input {
+            padding: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background: var(--primary-color);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot-message {
+            background: #f3f4f6;
+            color: var(--dark-color);
+            border-bottom-left-radius: 5px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .chatbot-window {
+                width: 300px;
+                height: 400px;
+            }
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Progress Bars */
+        .progress {
+            height: 10px;
+            border-radius: 10px;
+            background: #e5e7eb;
+        }
+
+        .progress-bar {
+            border-radius: 10px;
+            transition: width 0.6s ease;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 2rem 0;
+        }
+
+        /* User Status */
+        .user-status {
+            background: white;
+            border-radius: 15px;
+            padding: 1rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .status-online {
+            color: var(--success-color);
+        }
+
+        .status-offline {
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <i class="fas fa-heartbeat me-2"></i>Total Wellness Hub
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#fitness">Fitness</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#diet">Diet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#mental">Mental</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sleep">Sleep</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Your Complete Wellness Journey Starts Here</h1>
+                <p class="hero-subtitle">Track fitness, nutrition, mental health, and sleep with AI-powered insights</p>
+                <button class="btn cta-button" onclick="scrollToSection('fitness')">
+                    Start Your Journey <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Dashboard -->
+    <div class="user-status d-none" id="userDashboard">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-1">Welcome back, <span id="userName">User</span>!</h5>
+                            <small class="status-online"><i class="fas fa-circle me-1"></i>Online</small>
+                        </div>
+                        <button class="btn btn-outline-danger btn-sm" onclick="logout()">
+                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weekly Summary Dashboard -->
+    <section class="section bg-light d-none" id="weeklyDashboard">
+        <div class="container">
+            <h2 class="section-title">Weekly Health Summary</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="dashboard-card stat-card">
+                        <div class="stat-number text-primary" id="weeklySteps">12,450</div>
+                        <div class="stat-label">Steps This Week</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="dashboard-card stat-card">
+                        <div class="stat-number text-success" id="weeklyWorkouts">5</div>
+                        <div class="stat-label">Workouts Completed</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="dashboard-card stat-card">
+                        <div class="stat-number text-warning" id="avgSleep">7.2</div>
+                        <div class="stat-label">Avg Sleep Hours</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="dashboard-card stat-card">
+                        <div class="stat-number text-info" id="moodScore">8.5</div>
+                        <div class="stat-label">Avg Mood Score</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="dashboard-card">
+                        <h5>Weekly Activity</h5>
+                        <canvas id="activityChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="dashboard-card">
+                        <h5>Sleep Quality Trend</h5>
+                        <canvas id="sleepChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fitness Section -->
+    <section id="fitness" class="section">
+        <div class="container">
+            <h2 class="section-title">Fitness Hub</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon fitness-icon">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <h4>Workout Plans</h4>
+                        <p>Personalized workout routines for all fitness levels</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#workoutModal">
+                            View Plans
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon fitness-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h4>BMI Calculator</h4>
+                        <p>Calculate your Body Mass Index and track progress</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bmiModal">
+                            Calculate BMI
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon fitness-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <h4>Calorie Counter</h4>
+                        <p>Track calories burned during workouts</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#calorieModal">
+                            Count Calories
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon fitness-icon">
+                            <i class="fas fa-walking"></i>
+                        </div>
+                        <h4>Step Counter</h4>
+                        <p>Monitor daily steps and activity levels</p>
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Today's Steps</span>
+                                <span id="stepCount">0</span>
+                            </div>
+                            <div class="progress mt-2">
+                                <div class="progress-bar bg-primary" id="stepProgress" style="width: 0%"></div>
+                            </div>
+                            <small class="text-muted">Goal: 10,000 steps</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diet Section -->
+    <section id="diet" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Nutrition Center</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon diet-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h4>Meal Planner</h4>
+                        <p>Plan your weekly meals with nutritional balance</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mealModal">
+                            Plan Meals
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon diet-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <h4>Food Logger</h4>
+                        <p>Track your daily food intake and calories</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#foodLogModal">
+                            Log Food
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon diet-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h4>Nutrition Tips</h4>
+                        <p>Daily tips for healthy eating habits</p>
+                        <div class="mt-3">
+                            <div class="alert alert-success" id="nutritionTip">
+                                💡 Drink at least 8 glasses of water daily for optimal hydration!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mental Health Section -->
+    <section id="mental" class="section">
+        <div class="container">
+            <h2 class="section-title">Mental Wellness</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon mental-icon">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                        <h4>Mood Tracker</h4>
+                        <p>Monitor your daily emotional well-being</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#moodModal">
+                            Track Mood
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon mental-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h4>Daily Journal</h4>
+                        <p>Reflect on your thoughts and experiences</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#journalModal">
+                            Write Entry
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon mental-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <h4>Daily Motivation</h4>
+                        <p>Inspirational quotes to brighten your day</p>
+                        <div class="mt-3">
+                            <blockquote class="blockquote text-center">
+                                <p class="mb-0" id="dailyQuote">"The only way to do great work is to love what you do."</p>
+                                <footer class="blockquote-footer mt-2">Steve Jobs</footer>
+                            </blockquote>
+                            <button class="btn btn-outline-primary btn-sm" onclick="getNewQuote()">New Quote</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sleep Section -->
+    <section id="sleep" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Sleep Wellness</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon sleep-icon">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <h4>Sleep Logger</h4>
+                        <p>Track your sleep patterns and quality</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sleepModal">
+                            Log Sleep
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon sleep-icon">
+                            <i class="fas fa-moon"></i>
+                        </div>
+                        <h4>Sleep Tips</h4>
+                        <p>Expert advice for better sleep quality</p>
+                        <div class="mt-3">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Keep a consistent sleep schedule</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Create a relaxing bedtime routine</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Avoid screens before bedtime</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Keep your bedroom cool and dark</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card feature-card">
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="contactName" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="contactName" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="contactEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="contactEmail" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contactSubject" class="form-label">Subject</label>
+                                <input type="text" class="form-control" id="contactSubject" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contactMessage" class="form-label">Message</label>
+                                <textarea class="form-control" id="contactMessage" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login to Your Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                    <hr>
+                    <p class="text-center mb-0">Don't have an account? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Register here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Your Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="registerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BMI Calculator Modal -->
+    <div class="modal fade" id="bmiModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">BMI Calculator</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="bmiForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="height" class="form-label">Height (cm)</label>
+                                <input type="number" class="form-control" id="height" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="weight" class="form-label">Weight (kg)</label>
+                                <input type="number" class="form-control" id="weight" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Calculate BMI</button>
+                    </form>
+                    <div id="bmiResult" class="mt-3 d-none">
+                        <div class="alert alert-info">
+                            <h6>Your BMI: <span id="bmiValue"></span></h6>
+                            <p id="bmiCategory" class="mb-0"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mood Tracker Modal -->
+    <div class="modal fade" id="moodModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">How are you feeling today?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <div class="mood-selector mb-4">
+                            <div class="row">
+                                <div class="col-2">
+                                    <button class="btn mood-btn" data-mood="1" onclick="selectMood(1)">😢</button>
+                                    <small class="d-block">Very Sad</small>
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn mood-btn" data-mood="2" onclick="selectMood(2)">😞</button>
+                                    <small class="d-block">Sad</small>
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn mood-btn" data-mood="3" onclick="selectMood(3)">😐</button>
+                                    <small class="d-block">Neutral</small>
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn mood-btn" data-mood="4" onclick="selectMood(4)">😊</button>
+                                    <small class="d-block">Happy</small>
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn mood-btn" data-mood="5" onclick="selectMood(5)">😄</button>
+                                    <small class="d-block">Very Happy</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="moodNotes" class="form-label">Notes (optional)</label>
+                            <textarea class="form-control" id="moodNotes" rows="3" placeholder="What's on your mind?"></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="saveMood()">Save Mood</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Other Modals (Workout, Calorie, Meal, Food Log, Journal, Sleep) -->
+    <div class="modal fade" id="workoutModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Workout Plans</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h6>Beginner</h6>
+                                    <p>3 days/week, 30 min sessions</p>
+                                    <button class="btn btn-outline-primary btn-sm">Select Plan</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h6>Intermediate</h6>
+                                    <p>4 days/week, 45 min sessions</p>
+                                    <button class="btn btn-outline-primary btn-sm">Select Plan</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h6>Advanced</h6>
+                                    <p>5 days/week, 60 min sessions</p>
+                                    <button class="btn btn-outline-primary btn-sm">Select Plan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Chatbot -->
+    <div class="chatbot-container">
+        <button class="chatbot-toggle" onclick="toggleChatbot()">
+            <i class="fas fa-robot"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <i class="fas fa-robot me-2"></i>AI Health Assistant
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    Hi! I'm your AI health assistant. I can help you with fitness tips, nutrition advice, and wellness guidance. How can I help you today?
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="chatInput" placeholder="Type your message...">
+                    <button class="btn btn-primary" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Global Variables
+        let currentUser = null;
+        let selectedMood = null;
+        let stepCount = 0;
+        let isLoggedIn = false;
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            loadNutritionTip();
+            loadDailyQuote();
+            startStepCounter();
+        });
+
+        // Authentication Functions
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Simulate login (in real app, this would be PHP/MySQL)
+            if (email && password) {
+                currentUser = {
+                    name: email.split('@')[0],
+                    email: email
+                };
+                
+                isLoggedIn = true;
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('userDashboard').classList.remove('d-none');
+                document.getElementById('weeklyDashboard').classList.remove('d-none');
+                
+                bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+                showAlert('Login successful!', 'success');
+                updateCharts();
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match!', 'danger');
+                return;
+            }
+            
+            // Simulate registration
+            currentUser = { name, email };
+            bootstrap.Modal.getInstance(document.getElementById('registerModal')).hide();
+            showAlert('Registration successful! Please login.', 'success');
+        });
+
+        function logout() {
+            currentUser = null;
+            isLoggedIn = false;
+            document.getElementById('userDashboard').classList.add('d-none');
+            document.getElementById('weeklyDashboard').classList.add('d-none');
+            showAlert('Logged out successfully!', 'info');
+        }
+
+        // BMI Calculator
+        document.getElementById('bmiForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const height = parseFloat(document.getElementById('height').value) / 100; // Convert to meters
+            const weight = parseFloat(document.getElementById('weight').value);
+            
+            const bmi = (weight / (height * height)).toFixed(1);
+            let category = '';
+            let alertClass = '';
+            
+            if (bmi < 18.5) {
+                category = 'Underweight';
+                alertClass = 'alert-warning';
+            } else if (bmi < 25) {
+                category = 'Normal weight';
+                alertClass = 'alert-success';
+            } else if (bmi < 30) {
+                category = 'Overweight';
+                alertClass = 'alert-warning';
+            } else {
+                category = 'Obese';
+                alertClass = 'alert-danger';
+            }
+            
+            document.getElementById('bmiValue').textContent = bmi;
+            document.getElementById('bmiCategory').textContent = `Category: ${category}`;
+            document.getElementById('bmiResult').className = `mt-3 alert ${alertClass}`;
+            document.getElementById('bmiResult').classList.remove('d-none');
+        });
+
+        // Mood Tracker
+        function selectMood(mood) {
+            selectedMood = mood;
+            document.querySelectorAll('.mood-btn').forEach(btn => {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-outline-secondary');
+            });
+            document.querySelector(`[data-mood="${mood}"]`).classList.remove('btn-outline-secondary');
+            document.querySelector(`[data-mood="${mood}"]`).classList.add('btn-primary');
+        }
+
+        function saveMood() {
+            if (!selectedMood) {
+                showAlert('Please select a mood first!', 'warning');
+                return;
+            }
+            
+            const notes = document.getElementById('moodNotes').value;
+            const moodData = {
+                mood: selectedMood,
+                notes: notes,
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            // In real app, save to database via AJAX
+            localStorage.setItem('todayMood', JSON.stringify(moodData));
+            bootstrap.Modal.getInstance(document.getElementById('moodModal')).hide();
+            showAlert('Mood saved successfully!', 'success');
+            
+            // Reset form
+            selectedMood = null;
+            document.getElementById('moodNotes').value = '';
+            document.querySelectorAll('.mood-btn').forEach(btn => {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-outline-secondary');
+            });
+        }
+
+        // Step Counter Simulation
+        function startStepCounter() {
+            setInterval(() => {
+                if (isLoggedIn) {
+                    stepCount += Math.floor(Math.random() * 5);
+                    document.getElementById('stepCount').textContent = stepCount.toLocaleString();
+                    
+                    const progress = Math.min((stepCount / 10000) * 100, 100);
+                    document.getElementById('stepProgress').style.width = progress + '%';
+                }
+            }, 5000);
+        }
+
+        // Contact Form
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('contactName').value,
+                email: document.getElementById('contactEmail').value,
+                subject: document.getElementById('contactSubject').value,
+                message: document.getElementById('contactMessage').value
+            };
+            
+            // In real app, send via PHP mail() or email service
+            showAlert('Message sent successfully! We\'ll get back to you soon.', 'success');
+            this.reset();
+        });
+
+        // AI Chatbot Functions
+        function toggleChatbot() {
+            const chatbotWindow = document.getElementById('chatbotWindow');
+            chatbotWindow.style.display = chatbotWindow.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Simulate AI response (in real app, call OpenAI API)
+            setTimeout(() => {
+                const response = generateAIResponse(message);
+                addMessage(response, 'bot');
+            }, 1000);
+        }
+
+        function addMessage(message, sender) {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.textContent = message;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function generateAIResponse(userMessage) {
+            const responses = {
+                fitness: "For fitness, I recommend starting with 30 minutes of moderate exercise 3-4 times per week. Focus on a mix of cardio and strength training!",
+                diet: "A balanced diet should include plenty of vegetables, lean proteins, whole grains, and healthy fats. Aim for 5-6 small meals throughout the day.",
+                sleep: "Good sleep hygiene includes going to bed at the same time each night, avoiding screens before bed, and keeping your room cool and dark.",
+                mental: "For mental wellness, try meditation, deep breathing exercises, or journaling. Don't hesitate to reach out to friends or professionals when needed.",
+                default: "I'm here to help with your health and wellness journey! Ask me about fitness, nutrition, sleep, or mental health tips."
+            };
+            
+            const lowerMessage = userMessage.toLowerCase();
+            
+            if (lowerMessage.includes('fitness') || lowerMessage.includes('exercise') || lowerMessage.includes('workout')) {
+                return responses.fitness;
+            } else if (lowerMessage.includes('diet') || lowerMessage.includes('nutrition') || lowerMessage.includes('food')) {
+                return responses.diet;
+            } else if (lowerMessage.includes('sleep') || lowerMessage.includes('tired')) {
+                return responses.sleep;
+            } else if (lowerMessage.includes('mental') || lowerMessage.includes('stress') || lowerMessage.includes('anxiety')) {
+                return responses.mental;
+            } else {
+                return responses.default;
+            }
+        }
+
+        // Enter key support for chatbot
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Charts Initialization
+        function initializeCharts() {
+            // Activity Chart
+            const activityCtx = document.getElementById('activityChart');
+            if (activityCtx) {
+                new Chart(activityCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Steps',
+                            data: [8500, 9200, 7800, 10500, 9800, 11200, 8900],
+                            borderColor: '#4f46e5',
+                            backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Sleep Chart
+            const sleepCtx = document.getElementById('sleepChart');
+            if (sleepCtx) {
+                new Chart(sleepCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Sleep Hours',
+                            data: [7.5, 6.8, 8.2, 7.1, 6.5, 8.8, 7.9],
+                            backgroundColor: '#06b6d4',
+                            borderRadius: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 10
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function updateCharts() {
+            // Update chart data when user logs in
+            // This would typically fetch real data from the database
+        }
+
+        // Utility Functions
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 5000);
+        }
+
+        function loadNutritionTip() {
+            const tips = [
+                "💡 Drink at least 8 glasses of water daily for optimal hydration!",
+                "🥗 Include colorful vegetables in every meal for maximum nutrients!",
+                "🍎 Choose whole fruits over fruit juices to get more fiber!",
+                "🥜 Add nuts and seeds to your diet for healthy fats and protein!",
+                "🐟 Include fatty fish twice a week for omega-3 fatty acids!"
+            ];
+            
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+            document.getElementById('nutritionTip').textContent = randomTip;
+        }
+
+        function loadDailyQuote() {
+            const quotes = [
+                { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+                { text: "Health is not about the weight you lose, but about the life you gain.", author: "Dr. Josh Axe" },
+                { text: "Take care of your body. It's the only place you have to live.", author: "Jim Rohn" },
+                { text: "A healthy outside starts from the inside.", author: "Robert Urich" },
+                { text: "Your body can stand almost anything. It's your mind you have to convince.", author: "Unknown" }
+            ];
+            
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('dailyQuote').textContent = `"${randomQuote.text}"`;
+            document.querySelector('.blockquote-footer').textContent = randomQuote.author;
+        }
+
+        function getNewQuote() {
+            loadDailyQuote();
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add fade-in animation to elements when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .dashboard-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'969b96bf71c58afa',t:'MTc1NDI4NDY1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
